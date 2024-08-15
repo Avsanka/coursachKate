@@ -1,0 +1,196 @@
+﻿@model cinema.Models.FilmSessionsVM
+
+@{
+    ViewBag.Title = "FilmDetails";
+}
+
+<h2>@Html.DisplayFor(model => model.film.name)</h2>
+@Html.ActionLink("< Назад", "ListOfFilms")
+
+<hr />
+<div style="display: flex">
+    <div>
+        <img src="@Html.DisplayFor(model=> model.film.img_url)" style="height:400px; width:250px" />
+    </div>
+    <div style="margin-left: 1%;">
+        <dl class="dl-horizontal" style="font-size: large">
+            <dt style="padding-top: 5px">
+                @Html.DisplayNameFor(model => model.film.year)
+            </dt>
+
+            <dd style="padding-top: 5px">
+                @Html.DisplayFor(model => model.film.year)
+            </dd>
+
+            <dt style="padding-top: 5px">
+                @Html.DisplayNameFor(model => model.film.rating)
+            </dt>
+
+            <dd style="padding-top: 5px">
+                @Html.DisplayFor(model => model.film.rating)
+            </dd>
+
+            <dt style="padding-top: 5px">
+                @Html.DisplayNameFor(model => model.film.director)
+            </dt>
+
+            <dd style="padding-top: 5px">
+                @Html.DisplayFor(model => model.film.director)
+            </dd>
+
+            <dt style="padding-top: 5px">
+                @Html.DisplayNameFor(model => model.film.cast)
+            </dt>
+
+            <dd style="padding-top: 5px">
+                @Html.DisplayFor(model => model.film.cast)
+            </dd>
+
+            <dt style="padding-top: 5px">
+                @Html.DisplayNameFor(model => model.film.duration)
+            </dt>
+
+            <dd style="padding-top: 5px">
+                @Html.DisplayFor(model => model.film.duration)
+            </dd>
+
+            <dt style="padding-top: 5px">
+                Даты проката
+            </dt>
+
+            <dd style="padding-top: 5px">
+                с @Html.DisplayFor(model => model.film.release_date_from).ToString().Remove(9, 8) по @Html.DisplayFor(model => model.film.release_date_till).ToString().Remove(9, 8)
+            </dd>
+
+            <dt style="padding-top: 5px">
+                @Html.DisplayNameFor(model => model.film.description)
+            </dt>
+
+            <dd style="padding-top: 5px">
+                @Html.DisplayFor(model => model.film.description)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<h3 style="padding-top: 1%">Список сеансов: </h3>
+
+@foreach (var item in Model.sessions)
+{
+    <div style="display:flex; margin-top: 2%; border: solid; border-width: 1px; border-color: lightgray; border-radius: 10px">
+        <div style="margin-left: 1%; position: center; padding-bottom: 1%">
+            <h4>Дата и время: @Html.DisplayFor(modelItem => item.session_datetime)</h4>
+            <h4>Зал: @Html.DisplayFor(modelItem => item.Hall.hall_name)</h4>
+            <h4>Цена: @Html.DisplayFor(modelItem => item.price)</h4>
+            <a class="btn btn-default" onclick="location.href='@Url.Action("BuyTicket", "main", new { sessionId = item.Session_ID})'">Купить билет</a>
+        </div>
+    </div>
+}
+
+
+
+
+
+@*<dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.year)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.year)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.director)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.director)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.cast)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.cast)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.duration)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.duration)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.release_date_from)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.release_date_from)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.release_date_till)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.release_date_till)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.rating)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.rating)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.rating_url)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.rating_url)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.img_url)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.img_url)
+            </dd>
+
+        </dl>
+    </div>*@
+@*<p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Film_ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

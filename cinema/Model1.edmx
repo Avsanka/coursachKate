@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Database1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Country_ID" />
+          </Key>
+          <Property Name="Country_ID" Type="int" Nullable="false" />
+          <Property Name="country_name" Type="nchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="Film_ID" />
+          </Key>
+          <Property Name="Film_ID" Type="int" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="director" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="cast" Type="nchar" MaxLength="300" Nullable="false" />
+          <Property Name="duration" Type="time" Precision="7" Nullable="false" />
+          <Property Name="release_date_from" Type="date" Nullable="false" />
+          <Property Name="release_date_till" Type="date" Nullable="false" />
+          <Property Name="description" Type="nchar" MaxLength="300" Nullable="false" />
+          <Property Name="rating" Type="real" />
+          <Property Name="rating_url" Type="nchar" MaxLength="500" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="img_url" Type="nchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Film_Country">
+          <Key>
+            <PropertyRef Name="ID_Country" />
+            <PropertyRef Name="ID_Film" />
+          </Key>
+          <Property Name="ID_Country" Type="int" Nullable="false" />
+          <Property Name="ID_Film" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Film_Genres">
+          <Key>
+            <PropertyRef Name="Genre_ID" />
+            <PropertyRef Name="ID_Film" />
+          </Key>
+          <Property Name="Genre_ID" Type="int" Nullable="false" />
+          <Property Name="ID_Film" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="ID_Genre" />
+          </Key>
+          <Property Name="ID_Genre" Type="int" Nullable="false" />
+          <Property Name="Genre_Name" Type="nchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hall">
+          <Key>
+            <PropertyRef Name="Hall_ID" />
+          </Key>
+          <Property Name="Hall_ID" Type="int" Nullable="false" />
+          <Property Name="row_count" Type="int" Nullable="false" />
+          <Property Name="places_in_row" Type="int" Nullable="false" />
+          <Property Name="hall_name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Session_ID" />
+          </Key>
+          <Property Name="Session_ID" Type="int" Nullable="false" />
+          <Property Name="session_datetime" Type="datetime" Nullable="false" />
+          <Property Name="cost" Type="int" Nullable="false" />
+          <Property Name="ID_Film" Type="int" Nullable="false" />
+          <Property Name="ID_Hall" Type="int" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="Ticket_ID" />
+          </Key>
+          <Property Name="Ticket_ID" Type="int" Nullable="false" />
+          <Property Name="row" Type="int" Nullable="false" />
+          <Property Name="place" Type="int" Nullable="false" />
+          <Property Name="purchase_datetine" Type="datetime" Nullable="false" />
+          <Property Name="ID_Session" Type="int" Nullable="false" />
+          <Property Name="phonenumber" Type="nchar" MaxLength="12" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Film_Country_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Film_Country" Type="Self.Film_Country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Country_ID" />
+            </Principal>
+            <Dependent Role="Film_Country">
+              <PropertyRef Name="ID_Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Country_Films">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="Film_Country" Type="Self.Film_Country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="Film_ID" />
+            </Principal>
+            <Dependent Role="Film_Country">
+              <PropertyRef Name="ID_Film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Genres_ToFilms">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="Film_Genres" Type="Self.Film_Genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="Film_ID" />
+            </Principal>
+            <Dependent Role="Film_Genres">
+              <PropertyRef Name="ID_Film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Film_Genres_ToGenres">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Film_Genres" Type="Self.Film_Genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="ID_Genre" />
+            </Principal>
+            <Dependent Role="Film_Genres">
+              <PropertyRef Name="Genre_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_ToFilms">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="Film_ID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="ID_Film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_ToHalls">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="Hall_ID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="ID_Hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToSession">
+          <End Role="Session" Type="Self.Session" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Session_ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="ID_Session" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Database1ModelContainer">
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Film_Country" EntityType="Self.Film_Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Film_Genres" EntityType="Self.Film_Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hall" EntityType="Self.Hall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Session" EntityType="Self.Session" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Film_Country_Country" Association="Self.FK_Film_Country_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Film_Country" EntitySet="Film_Country" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Country_Films" Association="Self.FK_Film_Country_Films">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="Film_Country" EntitySet="Film_Country" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Genres_ToFilms" Association="Self.FK_Film_Genres_ToFilms">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="Film_Genres" EntitySet="Film_Genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Film_Genres_ToGenres" Association="Self.FK_Film_Genres_ToGenres">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Film_Genres" EntitySet="Film_Genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToFilms" Association="Self.FK_Session_ToFilms">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToHalls" Association="Self.FK_Session_ToHalls">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToSession" Association="Self.FK_Ticket_ToSession">
+            <End Role="Session" EntitySet="Session" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Country_ID" />
+          </Key>
+          <Property Name="Country_ID" Type="Int32" Nullable="false" />
+          <Property Name="country_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Film" Relationship="Self.Film_Country" FromRole="Country" ToRole="Film" />
+        </EntityType>
+        <EntityType Name="Film">
+          <Key>
+            <PropertyRef Name="Film_ID" />
+          </Key>
+          <Property Name="Film_ID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="director" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="cast" Type="String" MaxLength="300" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="duration" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="release_date_from" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="release_date_till" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="300" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="rating" Type="Single" />
+          <Property Name="rating_url" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Session" Relationship="Self.FK_Session_ToFilms" FromRole="Film" ToRole="Session" />
+          <NavigationProperty Name="Country" Relationship="Self.Film_Country" FromRole="Film" ToRole="Country" />
+          <NavigationProperty Name="Genre" Relationship="Self.Film_Genres" FromRole="Film" ToRole="Genre" />
+          <Property Name="img_url" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="ID_Genre" />
+          </Key>
+          <Property Name="ID_Genre" Type="Int32" Nullable="false" />
+          <Property Name="Genre_Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Film" Relationship="Self.Film_Genres" FromRole="Genre" ToRole="Film" />
+        </EntityType>
+        <EntityType Name="Hall">
+          <Key>
+            <PropertyRef Name="Hall_ID" />
+          </Key>
+          <Property Name="Hall_ID" Type="Int32" Nullable="false" />
+          <Property Name="row_count" Type="Int32" Nullable="false" />
+          <Property Name="places_in_row" Type="Int32" Nullable="false" />
+          <Property Name="hall_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Session" Relationship="Self.FK_Session_ToHalls" FromRole="Hall" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Session_ID" />
+          </Key>
+          <Property Name="Session_ID" Type="Int32" Nullable="false" />
+          <Property Name="session_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cost" Type="Int32" Nullable="false" />
+          <Property Name="ID_Film" Type="Int32" Nullable="false" />
+          <Property Name="ID_Hall" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Film" Relationship="Self.FK_Session_ToFilms" FromRole="Session" ToRole="Film" />
+          <NavigationProperty Name="Hall" Relationship="Self.FK_Session_ToHalls" FromRole="Session" ToRole="Hall" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_ToSession" FromRole="Session" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="Ticket_ID" />
+          </Key>
+          <Property Name="Ticket_ID" Type="Int32" Nullable="false" />
+          <Property Name="row" Type="Int32" Nullable="false" />
+          <Property Name="place" Type="Int32" Nullable="false" />
+          <Property Name="purchase_datetine" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID_Session" Type="Int32" Nullable="false" />
+          <Property Name="phonenumber" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Session" Relationship="Self.FK_Ticket_ToSession" FromRole="Ticket" ToRole="Session" />
+        </EntityType>
+        <Association Name="FK_Session_ToFilms">
+          <End Role="Film" Type="Self.Film" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Film">
+              <PropertyRef Name="Film_ID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="ID_Film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_ToHalls">
+          <End Role="Hall" Type="Self.Hall" Multiplicity="1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hall">
+              <PropertyRef Name="Hall_ID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="ID_Hall" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToSession">
+          <End Role="Session" Type="Self.Session" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Session">
+              <PropertyRef Name="Session_ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="ID_Session" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Film_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="*" />
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+        </Association>
+        <Association Name="Film_Genres">
+          <End Role="Film" Type="Self.Film" Multiplicity="*" />
+          <End Role="Genre" Type="Self.Genre" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Country" EntityType="Self.Country" />
+          <EntitySet Name="Film" EntityType="Self.Film" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" />
+          <EntitySet Name="Hall" EntityType="Self.Hall" />
+          <EntitySet Name="Session" EntityType="Self.Session" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" />
+          <AssociationSet Name="FK_Session_ToFilms" Association="Self.FK_Session_ToFilms">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_ToHalls" Association="Self.FK_Session_ToHalls">
+            <End Role="Hall" EntitySet="Hall" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToSession" Association="Self.FK_Ticket_ToSession">
+            <End Role="Session" EntitySet="Session" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="Film_Country" Association="Self.Film_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Film" EntitySet="Film" />
+          </AssociationSet>
+          <AssociationSet Name="Film_Genres" Association="Self.Film_Genres">
+            <End Role="Film" EntitySet="Film" />
+            <End Role="Genre" EntitySet="Genre" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Database1ModelContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="Country">
+            <EntityTypeMapping TypeName="Database1Model.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Country_ID" ColumnName="Country_ID" />
+                <ScalarProperty Name="country_name" ColumnName="country_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Film">
+            <EntityTypeMapping TypeName="Database1Model.Film">
+              <MappingFragment StoreEntitySet="Film">
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
+                <ScalarProperty Name="Film_ID" ColumnName="Film_ID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="director" ColumnName="director" />
+                <ScalarProperty Name="cast" ColumnName="cast" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="release_date_from" ColumnName="release_date_from" />
+                <ScalarProperty Name="release_date_till" ColumnName="release_date_till" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="rating_url" ColumnName="rating_url" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genre">
+            <EntityTypeMapping TypeName="Database1Model.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="ID_Genre" ColumnName="ID_Genre" />
+                <ScalarProperty Name="Genre_Name" ColumnName="Genre_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hall">
+            <EntityTypeMapping TypeName="Database1Model.Hall">
+              <MappingFragment StoreEntitySet="Hall">
+                <ScalarProperty Name="Hall_ID" ColumnName="Hall_ID" />
+                <ScalarProperty Name="row_count" ColumnName="row_count" />
+                <ScalarProperty Name="places_in_row" ColumnName="places_in_row" />
+                <ScalarProperty Name="hall_name" ColumnName="hall_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Session">
+            <EntityTypeMapping TypeName="Database1Model.Session">
+              <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="Session_ID" ColumnName="Session_ID" />
+                <ScalarProperty Name="session_datetime" ColumnName="session_datetime" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="ID_Film" ColumnName="ID_Film" />
+                <ScalarProperty Name="ID_Hall" ColumnName="ID_Hall" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket">
+            <EntityTypeMapping TypeName="Database1Model.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="Ticket_ID" ColumnName="Ticket_ID" />
+                <ScalarProperty Name="row" ColumnName="row" />
+                <ScalarProperty Name="place" ColumnName="place" />
+                <ScalarProperty Name="purchase_datetine" ColumnName="purchase_datetine" />
+                <ScalarProperty Name="ID_Session" ColumnName="ID_Session" />
+                <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Film_Country" TypeName="Database1Model.Film_Country" StoreEntitySet="Film_Country">
+            <EndProperty Name="Country">
+              <ScalarProperty Name="Country_ID" ColumnName="ID_Country" />
+            </EndProperty>
+            <EndProperty Name="Film">
+              <ScalarProperty Name="Film_ID" ColumnName="ID_Film" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Film_Genres" TypeName="Database1Model.Film_Genres" StoreEntitySet="Film_Genres">
+            <EndProperty Name="Film">
+              <ScalarProperty Name="Film_ID" ColumnName="ID_Film" />
+            </EndProperty>
+            <EndProperty Name="Genre">
+              <ScalarProperty Name="ID_Genre" ColumnName="Genre_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

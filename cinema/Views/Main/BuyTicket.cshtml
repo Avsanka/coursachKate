@@ -1,0 +1,117 @@
+﻿@model cinema.Models.SessionTicketVM
+
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f4f4f4;
+    }
+
+    .hall {
+        display: grid;
+        grid-template-columns: repeat(@Html.DisplayFor(model => model.session.Hall.places_in_row), 1fr);
+        gap: 10px;
+        margin: 20px auto;
+        max-width: 600px;
+    }
+
+    .seat {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #000;
+        cursor: pointer;
+        background-color: blue; /* Доступные места */
+    }
+
+        .seat.selected {
+            background-color: green; /* Выбранное место */
+        }
+
+        .seat.unavailable {
+            background-color: red; /* Недоступные места */
+            cursor: not-allowed;
+        }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+</style>
+</head>
+<body>
+
+    <h1>Покупка билета</h1>
+    <h2>Выберите место</h2>
+   
+
+    @for (int i = 1; i <= Model.session.Hall.row_count; i++) {
+        <div class="hall">
+        @for (int j = 1; j <= Model.session.Hall.places_in_row; j++) {
+            bool temp = false;
+            foreach (var item in Model.tickets) {
+                if (item.row == i && item.place == j)
+                {
+                    temp = true;
+                }
+            }
+            if (!temp)
+            {
+             <div class="seat" onclick="selectSeat(this)" id="@i" data-id="@j"></div>
+            }
+            else {
+                <div class="seat unavailable"></div>
+            }
+        }
+        </div>
+    }
+
+
+    <!--div class="hall">-->
+        <!-- Доступные места -->
+        <!--<div class="seat" onclick="selectSeat(this)"></div>
+        <div class="seat" onclick="selectSeat(this)"></div>
+        <div class="seat" onclick="selectSeat(this)"></div>
+        <div class="seat unavailable"></div>
+        <div class="seat" onclick="selectSeat(this)"></div>
+        <div class="seat unavailable"></div>
+        <div class="seat" onclick="selectSeat(this)"></div>
+        <div class="seat" onclick="selectSeat(this)"></div>
+        <div class="seat" onclick="selectSeat(this)"></div>
+        <div class="seat unavailable"></div>
+    </div>-->
+
+    <button id="buyButton" disabled class="btn btn-default">Купить билет</button>
+
+
+    <script>
+        let selectedSeat = null;
+
+        function selectSeat(seat) {
+            // Если место недоступно, ничего не делаем
+            if (seat.classList.contains('unavailable')) return;
+
+            // Убираем выделение с предыдущего выбранного места
+            if (selectedSeat) {
+                selectedSeat.classList.remove('selected');
+            }
+
+            // Выбираем новое место
+            selectedSeat = seat;
+            selectedSeat.classList.add('selected');
+
+            // Активируем кнопку покупки
+            document.getElementById('buyButton').disabled = false;
+        }
+
+        document.getElementById('buyButton').onclick = function () {
+            if (selectedSeat) {
+                //alert('Билет на место куплен!');
+                //// Здесь можно добавить логику для обработки покупки
+                //console.log(selectedSeat.getAttribute('id'), selectedSeat.getAttribute('data-id'))
+                location.href='/main/ConfirmBuy?ID_Session=' + @Model.session.Session_ID + '&&row='+selectedSeat.getAttribute('id') + '&&place=' + selectedSeat.getAttribute('data-id') + '&&price=' + @Model.session.price
+
+            }
+        };
+    </script>
+    </body>

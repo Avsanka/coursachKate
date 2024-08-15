@@ -1,0 +1,112 @@
+﻿@model IEnumerable<cinema.Film>
+
+@{
+    ViewBag.Title = "ListOfFilms";
+}
+
+<h2>Афиша фильмов</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.director)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cast)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.release_date_from)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.release_date_till)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rating_url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th></th>
+    </tr>*@
+
+@foreach (var item in Model)
+{
+<div style="display:flex; margin-top: 2%; border: solid; border-width: 1px; border-color: lightgray; border-radius: 10px">
+    <div style="height: 170px; width: 160px; padding-top: 1%; padding-bottom: 1%">
+        <img style="object-fit: contain; width: 100%; height: 100%;" src="@item.img_url">
+    </div>
+    <div style="margin-left: 1%; position: center">
+        <h3>@Html.DisplayFor(modelItem => item.name)</h3>
+        <h4>Рейтинг: @Html.DisplayFor(modelItem => item.rating)</h4>
+        <a class="btn btn-default" onclick="location.href='@Url.Action("FilmDetails", "main", new { id = item.Film_ID})'">Подробнее</a>
+    </div>
+    <div style="margin-left: 3%; margin-top: 1%">
+        <h4>Продолжительность: @Html.DisplayFor(modelItem => item.duration)</h4>
+        <h4>Режиссёр: @Html.DisplayFor(modelItem => item.director)</h4>
+    </div>
+</div>
+}
+
+
+
+    @*<tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.director)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cast)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.release_date_from)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.release_date_till)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rating_url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Film_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Film_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Film_ID })
+        </td>
+    </tr>
+}
+
+</table>*@

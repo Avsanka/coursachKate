@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище Database1ModelContainer" CdmEntityContainer="Database1Entities">
+    <EntitySetMapping Name="Country">
+      <EntityTypeMapping TypeName="Database1Model.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="Country_ID" ColumnName="Country_ID" />
+          <ScalarProperty Name="country_name" ColumnName="country_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Film">
+      <EntityTypeMapping TypeName="Database1Model.Film">
+        <MappingFragment StoreEntitySet="Film">
+          <ScalarProperty Name="img_url" ColumnName="img_url" />
+          <ScalarProperty Name="Film_ID" ColumnName="Film_ID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="director" ColumnName="director" />
+          <ScalarProperty Name="cast" ColumnName="cast" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="release_date_from" ColumnName="release_date_from" />
+          <ScalarProperty Name="release_date_till" ColumnName="release_date_till" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="rating_url" ColumnName="rating_url" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genre">
+      <EntityTypeMapping TypeName="Database1Model.Genre">
+        <MappingFragment StoreEntitySet="Genre">
+          <ScalarProperty Name="ID_Genre" ColumnName="ID_Genre" />
+          <ScalarProperty Name="Genre_Name" ColumnName="Genre_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hall">
+      <EntityTypeMapping TypeName="Database1Model.Hall">
+        <MappingFragment StoreEntitySet="Hall">
+          <ScalarProperty Name="Hall_ID" ColumnName="Hall_ID" />
+          <ScalarProperty Name="row_count" ColumnName="row_count" />
+          <ScalarProperty Name="places_in_row" ColumnName="places_in_row" />
+          <ScalarProperty Name="hall_name" ColumnName="hall_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session">
+      <EntityTypeMapping TypeName="Database1Model.Session">
+        <MappingFragment StoreEntitySet="Session">
+          <ScalarProperty Name="Session_ID" ColumnName="Session_ID" />
+          <ScalarProperty Name="session_datetime" ColumnName="session_datetime" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="ID_Film" ColumnName="ID_Film" />
+          <ScalarProperty Name="ID_Hall" ColumnName="ID_Hall" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ticket">
+      <EntityTypeMapping TypeName="Database1Model.Ticket">
+        <MappingFragment StoreEntitySet="Ticket">
+          <ScalarProperty Name="Ticket_ID" ColumnName="Ticket_ID" />
+          <ScalarProperty Name="row" ColumnName="row" />
+          <ScalarProperty Name="place" ColumnName="place" />
+          <ScalarProperty Name="purchase_datetine" ColumnName="purchase_datetine" />
+          <ScalarProperty Name="ID_Session" ColumnName="ID_Session" />
+          <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Film_Country" TypeName="Database1Model.Film_Country" StoreEntitySet="Film_Country">
+      <EndProperty Name="Country">
+        <ScalarProperty Name="Country_ID" ColumnName="ID_Country" />
+      </EndProperty>
+      <EndProperty Name="Film">
+        <ScalarProperty Name="Film_ID" ColumnName="ID_Film" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Film_Genres" TypeName="Database1Model.Film_Genres" StoreEntitySet="Film_Genres">
+      <EndProperty Name="Film">
+        <ScalarProperty Name="Film_ID" ColumnName="ID_Film" />
+      </EndProperty>
+      <EndProperty Name="Genre">
+        <ScalarProperty Name="ID_Genre" ColumnName="Genre_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
